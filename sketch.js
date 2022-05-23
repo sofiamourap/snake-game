@@ -4,7 +4,7 @@ let food;
 
 function setup() {
   createCanvas(600, 600);
-  s = new Snake();
+  s = new Snake(0, 0);
   //slow the frame rate to make the snake slower
   frameRate(10);
 

@@ -1,4 +1,96 @@
-//snake constructor
+class Node {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.next = null;
+  }
+}
+
+//linked list for the body
+class Snake {
+  constructor(x, y) {
+    this.head = new Node(x, y);
+    this.tail = this.head;
+    // this.x = 0;
+    this.xspeed = 1;
+    this.yspeed = 0;
+    //size of the snake
+    this.total = 0;
+  }
+
+  //update the snake position
+  update() {
+    //when no food has been eaten, the snake just moves forward
+
+    //the last spot in the array is the head
+    // this.tail[this.total - 1] = createVector(this.x, this.y);
+
+    this.head.x = this.head.x + this.xspeed * scl;
+    this.head.y = this.head.y + this.yspeed * scl;
+
+    //constrain the snake to the canvas
+    this.head.x = constrain(this.head.x, 0, width - scl);
+    this.head.y = constrain(this.head.y, 0, height - scl);
+  }
+
+  //grow the snake
+  grow() {
+    this.total++;
+    //add new head after eating the food
+    let pos = createVector(this.head.x, this.head.y);
+    console.log("pos", pos.x, pos.y);
+    let newNode = new Node(pos.x, pos.y);
+    newNode.next = this.head;
+    this.head = newNode;
+  }
+
+  //check if the snake hits itself and die
+  death() {
+    for (let i = 0; i < this.tail.length; i++) {
+      let pos = this.tail[i];
+      //check the distance between the head and each other part of the snake
+      let d = dist(this.x, this.y, pos.x, pos.y);
+      if (d < 1) {
+        console.log("starting over");
+        this.total = 0;
+        this.tail = [];
+        this.x = 0;
+        this.y = 0;
+      }
+    }
+  }
+
+  //receive the direction of the snake when the key is pressed
+  dir(x, y) {
+    this.xspeed = x;
+    this.yspeed = y;
+  }
+
+  eat(pos) {
+    //check if the distance between the snake and the food is less than the scale or 1px
+    let distance = dist(this.head.x, this.head.y, pos.x, pos.y);
+    if (distance < 1) {
+      this.grow();
+      return true;
+    } else return false;
+  }
+
+  //draw and show the snake in the canvas
+  show() {
+    fill(255);
+    //create one rectangle for each part of the snake
+    let currentNode = this.head;
+    while (currentNode !== this.tail) {
+      rect(currentNode.x, currentNode.y, scl, scl);
+      currentNode = currentNode.next;
+    }
+
+    //draw the head
+    rect(this.head.x, this.head.y, scl, scl);
+  }
+}
+
+/* //snake constructor
 function Snake() {
   this.x = 0;
   this.y = 0;
@@ -68,4 +160,4 @@ function Snake() {
     }
     rect(this.x, this.y, scl, scl);
   };
-}
+} */
