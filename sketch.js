@@ -34,7 +34,7 @@ function draw() {
   //if the snake eats the food, create a new food, increase the size of the snake
   if (s.eat(food)) {
     pickLocation();
-    s.total++;
+    // s.total++;
   }
 
   //color and create the food
