@@ -50,18 +50,15 @@ class Snake {
 
   //grow the snake
   grow() {
-    //create a new node to add to the head
+    //create a new node
     let newNode = new Node(
       this.head.x + this.xspeed * scl,
       this.head.y + this.yspeed * scl
     );
+
+    //add this new node to the head
     newNode.next = this.head;
     this.head = newNode;
-
-    console.log("head", this.head);
-    console.log("head.next", this.head.next);
-    console.log("head.next.next", this.head.next.next);
-    console.log("tail", this.tail);
   }
 
   //check if the snake hits itself and die
